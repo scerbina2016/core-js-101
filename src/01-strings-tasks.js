@@ -166,8 +166,8 @@ function removeFirstOccurrences(str, value) {
  *   '<span>' => 'span'
  *   '<a>' => 'a'
  */
-function unbracketTag(/* str */) {
-  throw new Error('Not implemented');
+function unbracketTag(str) {
+  return str.replace(/</, '').replace(/>/, '');
 }
 
 
@@ -181,8 +181,8 @@ function unbracketTag(/* str */) {
  *   'Thunderstruck' => 'THUNDERSTRUCK'
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
  */
-function convertToUpperCase(/* str */) {
-  throw new Error('Not implemented');
+function convertToUpperCase(str) {
+  return str.toUpperCase();
 }
 
 /**
@@ -200,8 +200,8 @@ function convertToUpperCase(/* str */) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  return str.split(';');
 }
 
 /**
@@ -227,10 +227,40 @@ function extractEmails(/* str */) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
-}
+function getRectangleString(width, height) {
+  const topLeft = String.fromCharCode(9484);
+  const topRight = `${String.fromCharCode(9488)}\n`;
+  const topMidl = String.fromCharCode(9472);
+  const botLeft = String.fromCharCode(9492);
+  const botRight = `${String.fromCharCode(9496)}\n`;
+  const botMidl = String.fromCharCode(9472);
+  const midlLeft = String.fromCharCode(9474);
+  const midlRight = `${String.fromCharCode(9474)}\n`;
+  let topLine = '';
+  let midlLine = '';
+  let botLine = '';
 
+  function repitCol(width1, char) {
+    let ret = '';
+    for (let i = 0; i < (width1 - 2); i += 1) {
+      ret += char;
+    }
+    return ret;
+  }
+  function body(height1) {
+    let rep = '';
+    for (let i = 0; i < (height1 - 2); i += 1) {
+      rep += midlLine;
+    }
+    return rep;
+  }
+  topLine = topLeft + repitCol(width, topMidl) + topRight;
+  midlLine = midlLeft + repitCol(width, ' ') + midlRight;
+  botLine = botLeft + repitCol(width, botMidl) + botRight;
+
+  const sqvare = topLine + body(height) + botLine;
+  return sqvare;
+}
 
 /**
  * Encode specified string with ROT13 cipher
@@ -248,10 +278,17 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const alfabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const rot13 = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+  let rot13Str = '';
+  for (let i = 0; i < str.length; i += 1) {
+    if (alfabet.indexOf(str.charAt(i)) === -1) {
+      rot13Str += str.charAt(i);
+    } else rot13Str += rot13.charAt(alfabet.indexOf(str.charAt(i)));
+  }
+  return rot13Str;
 }
-
 /**
  * Returns true if the value is string; otherwise false.
  * @param {string} value
