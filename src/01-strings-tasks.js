@@ -96,10 +96,30 @@ function getFirstChar(value) {
  *   'cat'              => 'cat'
  *   '\tHello, World! ' => 'Hello, World!'
  */
-function removeLeadingAndTrailingWhitespaces(/* value */) {
-  throw new Error('Not implemented');
+function removeLeadingAndTrailingWhitespaces(value) {
+  const asd = value.split('');
+  let qwe = '';
+  let zsd2 = '';
+  for (let i = 0; i < value.length; i += 1) {
+    if (asd[i] === '\t') { asd[i] = ' '; }
+  }
+  for (let i = 0; i < value.length; i += 1) {
+    if ((asd[i] === ' ') && (asd[i + 1] === ' ')) { asd[i] = ''; }
+  }
+  if ((asd.indexOf(' ') === asd.lastIndexOf(' ')) && (asd.indexOf(' ') < 0)) {
+    zsd2 = asd.slice(0, asd.length);
+  }
+  if ((asd.indexOf(' ') === asd.lastIndexOf(' ')) && (asd.indexOf(' ') > 0)) {
+    zsd2 = asd.slice(asd.indexOf(' ') + 1, asd.length);
+  }
+  if (asd.indexOf(' ') !== asd.lastIndexOf(' ')) {
+    zsd2 = asd.slice(asd.indexOf(' ') + 1, asd.lastIndexOf(' '));
+  }
+  for (let i = 0; i < zsd2.length; i += 1) {
+    qwe += zsd2[i];
+  }
+  return qwe;
 }
-
 /**
  * Returns a string that repeated the specified number of times.
  *
@@ -111,8 +131,13 @@ function removeLeadingAndTrailingWhitespaces(/* value */) {
  *   'A', 5  => 'AAAAA'
  *   'cat', 3 => 'catcatcat'
  */
-function repeatString(/* value, count */) {
-  throw new Error('Not implemented');
+function repeatString(value, count) {
+  let resStr = '';
+  const res = Number(count);
+  for (let i = 1; i <= res; i += 1) {
+    resStr += value;
+  }
+  return resStr;
 }
 
 /**
@@ -127,10 +152,9 @@ function repeatString(/* value, count */) {
  *   'I like legends', 'end' => 'I like legs',
  *   'ABABAB','BA' => 'ABAB'
  */
-function removeFirstOccurrences(/* str, value */) {
-  throw new Error('Not implemented');
+function removeFirstOccurrences(str, value) {
+  return str.replace(new RegExp(value), '');
 }
-
 /**
  * Remove the first and last angle brackets from tag string
  *
