@@ -105,7 +105,6 @@ function removeFalsyValues(arr) {
 }
 
 
-
 /**
  * Returns the array of uppercase strings from the specified array
  *
