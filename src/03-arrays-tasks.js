@@ -104,6 +104,8 @@ function removeFalsyValues(arr) {
   return arr.filter((value) => Boolean(value) === true);
 }
 
+
+
 /**
  * Returns the array of uppercase strings from the specified array
  *
