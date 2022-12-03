@@ -353,8 +353,10 @@ function getItemsSum(arr) {
  *  [ -1, 'false', null, 0 ] => 2
  *  [ null, undefined, NaN, false, 0, '' ]  => 6
  */
-function getFalsyValuesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getFalsyValuesCount(arr) {
+  const arrBool = arr.map((num) => Boolean(num));
+  const arrBoolSort = arrBool.sort((a, b) => a - b);
+  return arrBoolSort.lastIndexOf(false) + 1;
 }
 
 /**
@@ -371,8 +373,15 @@ function getFalsyValuesCount(/* arr */) {
  *    [ null, undefined, null ], null => 2
  *    [ true, 0, 1, 'true' ], true => 1
  */
-function findAllOccurrences(/* arr, item */) {
-  throw new Error('Not implemented');
+function findAllOccurrences(arr, item) {
+  let s;
+  const arrBoolSort = arr.sort((a, b) => a - b);
+  if (arrBoolSort.lastIndexOf(item) === -1) {
+    s = arrBoolSort.lastIndexOf(item) - arrBoolSort.indexOf(item) + 0;
+  } else {
+    s = arrBoolSort.lastIndexOf(item) - arrBoolSort.indexOf(item) + 1;
+  }
+  return s;
 }
 
 /**
@@ -386,8 +395,8 @@ function findAllOccurrences(/* arr, item */) {
  *    [1, 2, 3, 4, 5]                   => '1,2,3,4,5'
  *    ['rock', 'paper', 'scissors']     => 'rock,paper,scissors'
  */
-function toStringList(/* arr */) {
-  throw new Error('Not implemented');
+function toStringList(arr) {
+  return arr.toString();
 }
 
 
@@ -417,10 +426,12 @@ function toStringList(/* arr */) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  const key = 'country';
+  const key2 = 'city';
+  const sor = arr.sort((a, b) => (a[key].localeCompare(b[key]) || a[key2].localeCompare(b[key2])));
+  return sor;
 }
-
 /**
  * Creates an identity matrix of the specified size
  *
