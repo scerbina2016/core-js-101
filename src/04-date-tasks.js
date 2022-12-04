@@ -55,8 +55,12 @@ function parseDataFromIso8601(value) {
  *    Date(2012,1,1)    => true
  *    Date(2015,1,1)    => false
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  let flag = Boolean;
+  const yearCalc = date.getFullYear();
+  const realDate = new Date(yearCalc, 1, 29).getDate();
+  if (realDate === 29) { flag = true; } else { flag = false; }
+  return flag;
 }
 
 
@@ -75,8 +79,21 @@ function isLeapYear(/* date */) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
+function timeSpanToString(startDate, endDate) {
+  const end = Date.parse(endDate);
+  const start = Date.parse(startDate);
+  const timeMili = end - start;
+  let hours = Math.trunc(timeMili / 3600000);
+  let minutes = Math.trunc((timeMili - hours * 3600000) / 60000);
+  let seconds = Math.trunc((timeMili - hours * 3600000 - minutes * 60000) / 1000);
+  let miliseconds = endDate.getMilliseconds() - startDate.getMilliseconds();
+  if (hours < 10) { hours = `0${hours}`; }
+  if (minutes < 10) { minutes = `0${minutes}`; }
+  if (seconds < 10) { seconds = `0${seconds}`; }
+  if (miliseconds < 10) { miliseconds = `00${miliseconds}`; } else if (miliseconds < 100) {
+    miliseconds = `0${miliseconds}`;
+  }
+  return `${hours}:${minutes}:${seconds}.${miliseconds}`;
 }
 
 
@@ -96,8 +113,14 @@ function timeSpanToString(/* startDate, endDate */) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(/* date */) {
-  throw new Error('Not implemented');
+function angleBetweenClockHands(date) {
+  let hours = date.getUTCHours();
+  if (hours > 12) { hours -= 12; }
+  const minutes = date.getUTCMinutes();
+  let angle = (30 * hours + 0.5 * minutes - 6 * minutes);
+  if (angle > 180) { angle = 360 - angle; }
+  if (angle < 0) { angle *= -1; }
+  return (angle * Math.PI) / 180;
 }
 
 
