@@ -27,8 +27,16 @@
  *  21 => 'Fizz'
  *
  */
-function getFizzBuzz(/* num */) {
-  throw new Error('Not implemented');
+function getFizzBuzz(num) {
+  const on5 = num % 5;
+  const on3 = num % 3;
+  let res;
+
+  if ((on3 === 0)) { res = 'Fizz'; }
+  if ((on5 === 0)) { res = 'Buzz'; }
+  if ((on3 === 0) && (on5 === 0)) { res = 'FizzBuzz'; }
+  if ((on3 !== 0) && (on5 !== 0)) { res = num; }
+  return res;
 }
 
 
@@ -43,8 +51,14 @@ function getFizzBuzz(/* num */) {
  *   5  => 120
  *   10 => 3628800
  */
-function getFactorial(/* n */) {
-  throw new Error('Not implemented');
+function getFactorial(n) {
+  let res;
+  if (n <= 0) {
+    res = 1;
+  } else {
+    return (n * getFactorial(n - 1));
+  }
+  return res;
 }
 
 
@@ -60,8 +74,12 @@ function getFactorial(/* n */) {
  *   5,10  =>  45 ( = 5+6+7+8+9+10 )
  *   -1,1  =>  0  ( = -1 + 0 + 1 )
  */
-function getSumBetweenNumbers(/* n1, n2 */) {
-  throw new Error('Not implemented');
+function getSumBetweenNumbers(n1, n2) {
+  let res = 0;
+  for (let i = n1; i <= n2; i += 1) {
+    res += i;
+  }
+  return res;
 }
 
 
@@ -80,8 +98,16 @@ function getSumBetweenNumbers(/* n1, n2 */) {
  *   10,1,1   =>  false
  *   10,10,10 =>  true
  */
-function isTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isTriangle(a, b, c) {
+  let res;
+  const arr = [a, b, c];
+  arr.sort((aq, bq) => bq - aq);
+  if (arr[0] >= (arr[1] + arr[2])) {
+    res = false;
+  } else {
+    res = true;
+  }
+  return res;
 }
 
 
@@ -117,8 +143,14 @@ function isTriangle(/* a, b, c */) {
  *   { top:20, left:20, width: 20, height: 20 }    =>  false
  *
  */
-function doRectanglesOverlap(/* rect1, rect2 */) {
-  throw new Error('Not implemented');
+function doRectanglesOverlap(rect1, rect2) {
+  let answ = true;
+  const firstHeight = rect1.top + rect1.height;
+  const firstWidth = rect1.left + rect1.width;
+  if (firstHeight < rect2.top) { answ = false; }
+  if (firstWidth < rect2.left) { answ = false; }
+
+  return answ;
 }
 
 
@@ -148,8 +180,19 @@ function doRectanglesOverlap(/* rect1, rect2 */) {
  *   { center: { x:0, y:0 }, radius:10 },  { x:10, y:10 }   => false
  *
  */
-function isInsideCircle(/* circle, point */) {
-  throw new Error('Not implemented');
+function isInsideCircle(circle, point) {
+  let res = false;
+  const circleX = circle.center.x;
+  const circleY = circle.center.y;
+  const pointX = point.x;
+  const pointY = point.y;
+  let catX = circleX - pointX;
+  let catY = circleY - pointY;
+
+  if (catX < 0) { catX *= -1; }
+  if (catY < 0) { catY *= -1; }
+  if (circle.radius > Math.hypot(catX, catY)) { res = true; }
+  return res;
 }
 
 
