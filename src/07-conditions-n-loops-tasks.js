@@ -207,8 +207,17 @@ function isInsideCircle(circle, point) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  let res = null;
+  const arrRep = str.replace(/( )/g, '');
+  let f = 0;
+  for (let i = 0; i < arrRep.length; i += 1) {
+    if ((arrRep.indexOf(arrRep.charAt(i)) === arrRep.lastIndexOf(arrRep.charAt(i))) && (f === 0)) {
+      res = arrRep.charAt(i); f = 1;
+    }
+  }
+
+  return res;
 }
 
 
@@ -234,8 +243,12 @@ function findFirstSingleChar(/* str */) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  let str = '';
+  if (isStartIncluded) { str += '['; } else { str += '('; }
+  if (a <= b) { str += `${a}, ${b}`; } else (str += `${b}, ${a}`);
+  if (isEndIncluded) { str += ']'; } else { str += ')'; }
+  return str;
 }
 
 
@@ -251,8 +264,12 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  let res = '';
+  for (let i = str.length; i >= 0; i -= 1) {
+    res += str.charAt(i);
+  }
+  return res;
 }
 
 
@@ -268,8 +285,13 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  let res = '';
+  const numStr = String(num);
+  for (let i = numStr.length; i >= 0; i -= 1) {
+    res += numStr.charAt(i);
+  }
+  return Number(res);
 }
 
 
@@ -293,8 +315,21 @@ function reverseInteger(/* num */) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const cardStr = String(ccn);
+  let numCheck = 0;
+  let bEven = false;
+  for (let n = cardStr.length - 1; n >= 0; n -= 1) {
+    let nDigit = parseInt(cardStr.charAt(n), 10);
+    nDigit *= 2;
+    if (bEven && (nDigit) > 9) {
+      nDigit -= 9;
+    }
+    numCheck += nDigit;
+    bEven = !bEven;
+  }
+
+  return (numCheck % 10) === 0;
 }
 
 /**
