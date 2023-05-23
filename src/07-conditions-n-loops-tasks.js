@@ -315,25 +315,29 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  /* const cardStr = String(ccn);
-  let res;
-  let numCheck = 0;
-  let bEven = false;
-  for (let n = cardStr.length - 1; n >= 0; n -= 1) {
-    let nDigit = parseInt(cardStr.charAt(n), 10);
-    nDigit *= 2;
-    if (bEven && (nDigit) > 9) {
-      nDigit -= 9;
+function isCreditCardNumber(ccn) {
+  const digits = ccn.toString().split('').map(Number);
+
+  let sum = 0;
+  let shouldDouble = false;
+
+  for (let i = digits.length - 1; i >= 0; i -= 1) {
+    let digit = digits[i];
+
+    if (shouldDouble) {
+      digit *= 2;
+      if (digit > 9) {
+        digit -= 9;
+      }
     }
-    numCheck += nDigit;
-    bEven = !bEven;
+
+    sum += digit;
+    shouldDouble = !shouldDouble;
   }
-  res = 1;
-  res = (numCheck % 10) === 0;
-  return !res; */
-  throw new Error('Not implemented');
+
+  return sum % 10 === 0;
 }
+
 
 /**
  * Returns the digital root of integer:
@@ -381,8 +385,26 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const stack = [];
+  const openingBrackets = ['[', '(', '{', '<'];
+  const closingBrackets = [']', ')', '}', '>'];
+
+  for (let i = 0; i < str.length; i += 1) {
+    const char = str[i];
+
+    if (openingBrackets.includes(char)) {
+      stack.push(char);
+    } else if (closingBrackets.includes(char)) {
+      const openingBracket = openingBrackets[closingBrackets.indexOf(char)];
+
+      if (stack.length === 0 || stack.pop() !== openingBracket) {
+        return false;
+      }
+    }
+  }
+
+  return stack.length === 0;
 }
 
 
@@ -429,8 +451,23 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const directories = pathes.map((path) => path.split('/'));
+
+  let commonPath = '';
+  const minLength = Math.min(...directories.map((dir) => dir.length));
+
+  for (let i = 0; i < minLength; i += 1) {
+    const directory = directories[0][i];
+
+    if (directories.every((dir) => dir[i] === directory)) {
+      commonPath += `${directory}/`;
+    } else {
+      break;
+    }
+  }
+
+  return commonPath;
 }
 
 
