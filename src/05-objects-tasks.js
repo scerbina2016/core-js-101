@@ -56,8 +56,11 @@ function getJSON(obj) {
  *    const r = fromJSON(Circle.prototype, '{"radius":10}');
  *
  */
-function fromJSON(/* proto, json */) {
-  throw new Error('Not implemented');
+function fromJSON(proto, json) {
+  const parsedObject = JSON.parse(json);
+  const object = Object.create(proto);
+  Object.assign(object, parsedObject);
+  return object;
 }
 
 
@@ -116,32 +119,102 @@ function fromJSON(/* proto, json */) {
  */
 
 const cssSelectorBuilder = {
-  element(/* value */) {
-    throw new Error('Not implemented');
+  selectors: [],
+
+  element(value) {
+    const selector = {
+      value,
+      selectorType: 'element',
+      order: this.selectors.length,
+      stringify() {
+        return this.value;
+      },
+    };
+    this.selectors.push(selector);
+    return this;
   },
 
-  id(/* value */) {
-    throw new Error('Not implemented');
+  id(value) {
+    const selector = {
+      value: `#${value}`,
+      selectorType: 'id',
+      order: this.selectors.length,
+      stringify() {
+        return this.value;
+      },
+    };
+    this.selectors = this.selectors.filter((sel) => sel.selectorType !== 'id');
+    this.selectors.push(selector);
+    return this;
   },
 
-  class(/* value */) {
-    throw new Error('Not implemented');
+  class(value) {
+    const selector = {
+      value: `.${value}`,
+      selectorType: 'class',
+      order: this.selectors.length,
+      stringify() {
+        return this.value;
+      },
+    };
+    this.selectors.push(selector);
+    return this;
   },
 
-  attr(/* value */) {
-    throw new Error('Not implemented');
+  attr(value) {
+    const selector = {
+      value: `[${value}]`,
+      selectorType: 'attr',
+      order: this.selectors.length,
+      stringify() {
+        return this.value;
+      },
+    };
+    this.selectors.push(selector);
+    return this;
   },
 
-  pseudoClass(/* value */) {
-    throw new Error('Not implemented');
+  pseudoClass(value) {
+    const selector = {
+      value: `:${value}`,
+      selectorType: 'pseudo-class',
+      order: this.selectors.length,
+      stringify() {
+        return this.value;
+      },
+    };
+    this.selectors.push(selector);
+    return this;
   },
 
-  pseudoElement(/* value */) {
-    throw new Error('Not implemented');
+  pseudoElement(value) {
+    const selector = {
+      value: `::${value}`,
+      selectorType: 'pseudo-element',
+      order: this.selectors.length,
+      stringify() {
+        return this.value;
+      },
+    };
+    this.selectors.push(selector);
+    return this;
   },
 
-  combine(/* selector1, combinator, selector2 */) {
-    throw new Error('Not implemented');
+  combine(selector1, combinator, selector2) {
+    const combinedSelector = {
+      value: `${selector1.stringify()} ${combinator} ${selector2.stringify()}`,
+      selectorType: 'combined',
+      order: this.selectors.length,
+      stringify() {
+        return this.value;
+      },
+    };
+    this.selectors.push(combinedSelector);
+    return this;
+  },
+
+  stringify() {
+    return this.selectors.map((selector) => selector.stringify()).join('');
   },
 };
 

@@ -235,15 +235,11 @@ function toArrayOfSquares(arr) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
 function getMovingSum(arr) {
-  const movingSum = [];
-  let sum = 0;
-
-  for (let i = 0; i < arr.length; i += 1) {
-    sum += arr[i];
-    movingSum.push(sum);
-  }
-
-  return movingSum;
+  return arr.reduce((result, current, index) => {
+    const sum = (result.length > 0) ? result[index - 1] + current : current;
+    result.push(sum);
+    return result;
+  }, []);
 }
 
 /**
@@ -258,13 +254,7 @@ function getMovingSum(arr) {
  * [ "a" ] => []
  */
 function getSecondItems(arr) {
-  const secondItems = [];
-
-  for (let i = 1; i < arr.length; i += 2) {
-    secondItems.push(arr[i]);
-  }
-
-  return secondItems;
+  return arr.filter((_, index) => index % 2 === 1);
 }
 
 
@@ -283,17 +273,7 @@ function getSecondItems(arr) {
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-  const propagatedArray = [];
-
-  for (let i = 0; i < arr.length; i += 1) {
-    const item = arr[i];
-    const repetitions = i + 1;
-    for (let j = 0; j < repetitions; j += 1) {
-      propagatedArray.push(item);
-    }
-  }
-
-  return propagatedArray;
+  return arr.flatMap((item, index) => Array(index + 1).fill(item));
 }
 
 
@@ -329,17 +309,7 @@ function get3TopItems(arr) {
  *   [ 1, '2' ] => 1
  */
 function getPositivesCount(arr) {
-  let count = 0;
-
-  for (let i = 0; i < arr.length; i += 1) {
-    const item = arr[i];
-
-    if (typeof item === 'number' && item > 0) {
-      count += 1;
-    }
-  }
-
-  return count;
+  return arr.filter((item) => typeof item === 'number' && item > 0).length;
 }
 
 /**
