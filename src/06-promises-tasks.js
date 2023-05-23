@@ -99,8 +99,9 @@ function getFastestPromise(array) {
  *    });
  *
  */
-function chainPromises(/* array, action */) {
-  throw new Error('Not implemented');
+function chainPromises(array, action) {
+  // eslint-disable-next-line max-len
+  return array.reduce((promise, currentPromise) => promise.then((value) => currentPromise.then((nextValue) => action(value, nextValue))).catch(() => {}));
 }
 
 module.exports = {
