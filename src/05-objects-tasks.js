@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-keys */
 /* ************************************************************************************************
  *                                                                                                *
  * Please read the following tutorial before implementing tasks:                                   *
@@ -119,102 +120,32 @@ function fromJSON(proto, json) {
  */
 
 const cssSelectorBuilder = {
-  selectors: [],
-
-  element(value) {
-    const selector = {
-      value,
-      selectorType: 'element',
-      order: this.selectors.length,
-      stringify() {
-        return this.value;
-      },
-    };
-    this.selectors.push(selector);
-    return this;
+  element(/* value */) {
+    throw new Error('Not implemented');
   },
 
-  id(value) {
-    const selector = {
-      value: `#${value}`,
-      selectorType: 'id',
-      order: this.selectors.length,
-      stringify() {
-        return this.value;
-      },
-    };
-    this.selectors = this.selectors.filter((sel) => sel.selectorType !== 'id');
-    this.selectors.push(selector);
-    return this;
+  id(/* value */) {
+    throw new Error('Not implemented');
   },
 
-  class(value) {
-    const selector = {
-      value: `.${value}`,
-      selectorType: 'class',
-      order: this.selectors.length,
-      stringify() {
-        return this.value;
-      },
-    };
-    this.selectors.push(selector);
-    return this;
+  class(/* value */) {
+    throw new Error('Not implemented');
   },
 
-  attr(value) {
-    const selector = {
-      value: `[${value}]`,
-      selectorType: 'attr',
-      order: this.selectors.length,
-      stringify() {
-        return this.value;
-      },
-    };
-    this.selectors.push(selector);
-    return this;
+  attr(/* value */) {
+    throw new Error('Not implemented');
   },
 
-  pseudoClass(value) {
-    const selector = {
-      value: `:${value}`,
-      selectorType: 'pseudo-class',
-      order: this.selectors.length,
-      stringify() {
-        return this.value;
-      },
-    };
-    this.selectors.push(selector);
-    return this;
+  pseudoClass(/* value */) {
+    throw new Error('Not implemented');
   },
 
-  pseudoElement(value) {
-    const selector = {
-      value: `::${value}`,
-      selectorType: 'pseudo-element',
-      order: this.selectors.length,
-      stringify() {
-        return this.value;
-      },
-    };
-    this.selectors.push(selector);
-    return this;
+  pseudoElement(/* value */) {
+    throw new Error('Not implemented');
   },
 
-  combine(selector1, combinator, selector2) {
-    const combinedSelector = {
-      value: `${selector1.stringify()} ${combinator} ${selector2.stringify()}`,
-      selectorType: 'combined',
-      order: this.selectors.length,
-      stringify() {
-        return this.value;
-      },
-    };
-    this.selectors.push(combinedSelector);
-    return this;
-  },
-
-  stringify() {
-    return this.selectors.map((selector) => selector.stringify()).join('');
+  combine(/* selector1, combinator, selector2 */) {
+    throw new Error('Not implemented');
   },
 };
 
